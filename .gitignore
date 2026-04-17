@@ -1,0 +1,35 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env
+
+# HuggingFace model cache (do NOT commit ~500MB models)
+.cache/
+huggingface/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+uvicorn.log
+
+# Build artifacts
+dist/
+build/
+*.egg-info/

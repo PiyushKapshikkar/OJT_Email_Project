@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Email Paraphrasing Tool</title>
+  <meta name="description"
+    content="Transform your emails instantly. Rephrase to professional, concise, friendly, or formal tone using AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+  <!-- Background orbs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <div class="logo">
+      <span class="logo-icon">✉</span>
+      <span class="logo-text">Mail<span class="accent">Polish</span></span>
+    </div>
+    <div class="header-badge">
+      <span class="badge-dot"></span>
+      AI-Powered · No API Key Needed
+    </div>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <h1 class="hero-title">
+      Rephrase Emails <br />
+      <span class="gradient-text">Instantly with AI</span>
+    </h1>
+    <p class="hero-sub">
+      Transform any email into the perfect tone — professional, concise, friendly, or formal.<br />
+    </p>
+  </section>
+
+  <!-- ── Main Tool ── -->
+  <main class="tool-container">
+
+    <!-- Style Selector -->
+    <div class="style-selector" role="group" aria-label="Tone style">
+      <button class="style-btn active" data-style="professional" id="btn-professional">
+        <span class="style-icon">💼</span>
+        <span>Professional</span>
+      </button>
+      <button class="style-btn" data-style="concise" id="btn-concise">
+        <span class="style-icon">⚡</span>
+        <span>Concise</span>
+      </button>
+      <button class="style-btn" data-style="friendly" id="btn-friendly">
+        <span class="style-icon">😊</span>
+        <span>Friendly</span>
+      </button>
+      <button class="style-btn" data-style="formal" id="btn-formal">
+        <span class="style-icon">🎩</span>
+        <span>Formal</span>
+      </button>
+    </div>
+
+    <!-- Editor Panels -->
+    <div class="editor-grid">
+
+      <!-- Input -->
+      <div class="panel" id="input-panel">
+        <div class="panel-header">
+          <span class="panel-label">📝 Original Email</span>
+          <div class="panel-actions">
+            <span class="char-count" id="char-count">0 / 2000</span>
+            <button class="icon-btn" id="clear-btn" title="Clear input" aria-label="Clear input">✕</button>
+          </div>
+        </div>
+        <textarea id="input-text" class="editor-textarea"
+          placeholder="Paste or type your email here…&#10;&#10;Example:&#10;Hey, just wanted to check in and see if you got the stuff I sent over last week. Let me know asap."
+          maxlength="2000" aria-label="Email input"></textarea>
+
+        <!-- Sample emails -->
+        <div class="samples-bar">
+          <span class="samples-label">Try a sample:</span>
+          <button class="sample-chip" id="sample-1">Casual Follow-up</button>
+          <button class="sample-chip" id="sample-2">Meeting Request</button>
+          <button class="sample-chip" id="sample-3">Complaint</button>
+        </div>
+      </div>
+
+      <!-- Output -->
+      <div class="panel" id="output-panel">
+        <div class="panel-header">
+          <span class="panel-label">✨ Paraphrased</span>
+          <div class="panel-actions">
+            <button class="icon-btn" id="copy-btn" title="Copy result" aria-label="Copy result" disabled>⎘ Copy</button>
+          </div>
+        </div>
+
+        <!-- Placeholder / Loading / Results -->
+        <div class="output-placeholder" id="output-placeholder">
+          <div class="placeholder-icon">🤖</div>
+          <p>Your paraphrased email will appear here</p>
+        </div>
+
+        <div class="loading-state hidden" id="loading-state">
+          <div class="spinner-ring"></div>
+          <p class="loading-text">Rephrasing with AI…</p>
+          <p class="loading-sub">First run downloads the model (~500 MB) and may take a minute.</p>
+        </div>
+
+        <!-- Variants Tabs -->
+        <div class="variants-container hidden" id="variants-container">
+          <div class="variants-tabs" id="variants-tabs" role="tablist"></div>
+          <div class="variant-output" id="variant-output"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Bar -->
+    <div class="action-bar">
+      <div class="variants-control">
+        <label for="num-variants" class="variants-label">Variants:</label>
+        <select id="num-variants" class="select-input" aria-label="Number of variants">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+        </select>
+      </div>
+      <button class="paraphrase-btn" id="paraphrase-btn" disabled aria-label="Paraphrase email">
+        <span class="btn-icon">✦</span>
+        <span class="btn-text">Paraphrase Email</span>
+        <span class="btn-shine"></span>
+      </button>
+    </div>
+
+    <!-- Error Banner -->
+    <div class="error-banner hidden" id="error-banner" role="alert">
+      <span class="error-icon">⚠</span>
+      <span id="error-msg">Something went wrong. Make sure the backend is running.</span>
+    </div>
+
+  </main>
+
+  <!-- ── How It Works ── -->
+  <section class="how-section">
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h3>Paste Your Email</h3>
+        <p>Drop any email text — draft, sent, or forwarded — into the editor.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h3>Choose a Tone</h3>
+        <p>Select Professional, Concise, Friendly, or Formal to match your intent.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h3>AI Rephrases</h3>
+        <p>A local PEGASUS model rewrites the text — no internet, no API keys.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <h3>Pick & Copy</h3>
+        <p>Review up to 3 variants, pick your favorite, and copy with one click.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <p>Built with 🤍 using <strong>PEGASUS</strong> + <strong>FastAPI</strong> + <strong>Vanilla JS</strong></p>
+    <p class="footer-sub">Runs 100% locally · No data sent to external servers</p>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+
+</html>
